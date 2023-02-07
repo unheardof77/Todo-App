@@ -19,11 +19,14 @@ export default function TodoPage(){
         getTodos();
     }, [])
 
-    const saveTodo = async ()=>{
+    const saveTodo = async (e: React.FormEvent)=>{
+        e.preventDefault();
         const db = await openDB("Todos", 1);
         const transaction = db.transaction("Todos", "readwrite");
         const store = transaction.objectStore("Todos");
         await store.add({message: todoMessage});
+        setTodoMessage("");
+        getTodos();
     }
 
     const getTodos = async ()=>{
@@ -39,6 +42,7 @@ export default function TodoPage(){
         const transaction = db.transaction("Todos", "readwrite");
         const store = transaction.objectStore("Todos");
         await store.delete(id);
+        getTodos();
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
@@ -48,7 +52,7 @@ export default function TodoPage(){
     return(
         <>
             <TodoItemBar saveTodo={saveTodo} inputValue={todoMessage} handleInputChange={handleInputChange} />
-            {todos.length > 1? (
+            {todos.length < 1? (
                 <Typography>Add some todos.</Typography>
             ):(
                 todos.map((todo) => <TodoListItem key={todo.id + todo.message} message={todo.message} deleteTodo={()=> deleteTodo(todo.id)} />)

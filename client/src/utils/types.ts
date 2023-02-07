@@ -1,9 +1,9 @@
-import {ChangeEvent} from "react";
+import {ChangeEvent, FormEvent} from "react";
 
 //COMPONENTS
     //TodoItemBar
         export interface ItemBarProps {
-            saveTodo():void;
+            saveTodo(e: FormEvent):void;
             inputValue: string;
             handleInputChange(e: ChangeEvent<HTMLInputElement>):void;
         }
