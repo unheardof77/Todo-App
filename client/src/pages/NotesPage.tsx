@@ -1,8 +1,8 @@
-
+import MarkDownArea from "../components/MarkDownArea/MarkDownArea";
 
 export default function NotesPage(){
 
     return(
-        <h1>notes page</h1>
+        <MarkDownArea/>
     )
 }
